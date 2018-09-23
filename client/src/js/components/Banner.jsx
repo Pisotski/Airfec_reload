@@ -1,12 +1,9 @@
 import React from 'react';
+import '../../css/banner.css';
 
 const Banner = (props) => {
   const styles = {
     backgroundImage: `url(${props.room.url})`,
-    height: 325,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
   };
   return (
     <div className="slide" style={styles} onClick={props.clickFunction}>

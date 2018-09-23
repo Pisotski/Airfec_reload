@@ -8,6 +8,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       collection: [],
+      isLoading: true,
       showCarousel: false,
       roomId: window.location.pathname.split('/')[2],
     };
@@ -15,34 +16,39 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+    const { roomId } = this.state;
     try {
-      const response = await axios.get(`/Photos/${this.state.roomId}`);
+      const response = await axios.get(`/Photos/${roomId}`);
+      const collection = await response;
       this.setState({
-        collection: response.data,
+        collection: collection.data,
+        isLoading: false,
       });
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   }
 
   toggleCarousel() {
+    const { showCarousel } = this.state;
     this.setState({
-      showCarousel: !this.state.showCarousel,
+      showCarousel: !showCarousel,
     });
   }
 
   render() {
+    const { isLoading, collection, showCarousel } = this.state;
     return (
       <div id="main-slide">
-      {this.state.collection.length > 0
-        ? <Banner clickFunction={this.toggleCarousel} room={this.state.collection[0]} />
-        : null
+        { isLoading
+          ? <div className="loading">{'I\'m loading'}</div>
+          : <Banner clickFunction={this.toggleCarousel} room={collection[0]} />
         }
-      {this.state.showCarousel
-        ? <BackgroundLayout clickFunction={this.toggleCarousel} collection={this.state.collection} />
-        : null
+        {showCarousel
+          ? <BackgroundLayout clickFunction={this.toggleCarousel} collection={collection} />
+          : null
         }
-    </div>
+      </div>
     );
   }
 }
