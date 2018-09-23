@@ -1,12 +1,13 @@
-const config = require('./config.js');
 const AWS = require('aws-sdk');
 const db = require('../server/connection.js');
+require('dotenv').config({ path: `${process.env.HOME}/.dotenv/airfec_reload/.env` });
 
 AWS.config.update({
-  accessKeyId: config.header.accessKeyId,
-  secretAccessKey: config.header.secretAccessKey,
+  accessKeyId: process.env.AWS_AKID,
+  secretAccessKey: process.env.AWS_SAK,
   region: 'us-east-2',
 });
+
 const urlReplacer = (arrayOfUrls) => {
   const currentUrl = urls => urls[Math.floor(Math.random() * urls.length)];
   for (let i = 0; i < 1001; i += 1) {

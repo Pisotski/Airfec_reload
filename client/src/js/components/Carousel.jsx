@@ -47,7 +47,6 @@ class Carousel extends React.Component {
   }
 
   showSlideShow() {
-    console.log('here');
     this.setState({
       showSlideShow: true,
     });

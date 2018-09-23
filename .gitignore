@@ -10,3 +10,4 @@ public/
 ##passwords
 helpers/configs.js
 helpers/mysqlConfigs.js
+.env
