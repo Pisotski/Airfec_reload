@@ -42,7 +42,7 @@ class App extends React.Component {
       <div id="main-slide">
         { isLoading
           ? <div className="loading">{'I\'m loading'}</div>
-          : <Banner clickFunction={this.toggleCarousel} room={collection[0]} />
+          : <Banner clickFunction={this.toggleCarousel} url={collection[0].url} />
         }
         {showCarousel
           ? <BackgroundLayout clickFunction={this.toggleCarousel} collection={collection} />
