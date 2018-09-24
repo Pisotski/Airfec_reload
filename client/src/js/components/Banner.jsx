@@ -7,7 +7,7 @@ const Banner = ({ url, clickFunction }) => {
     backgroundImage: `url(${url})`,
   };
   return (
-    <div role="presentation" className="slide" style={styles} onClick={clickFunction} />
+    <div role="presentation" className="main-slide" style={styles} onClick={clickFunction} />
   );
 };
 

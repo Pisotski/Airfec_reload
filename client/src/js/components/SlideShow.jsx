@@ -1,26 +1,28 @@
 import React from 'react';
-import ImageSlide from './ImageSlide.jsx';
+import '../../css/slideshow.css';
 
 class SlideShow extends React.Component {
   constructor(props) {
     super(props);
-    this.SlideShowFlexBox = {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-    };
-    this.alignCenter = {
-      display: 'inlineFlex',
-      height: '100px',
+    const { collection } = this.props;
+    this.state = {
+      collection,
     };
   }
 
   render() {
+    const { collection } = this.state;
     return (
-      <div style={this.SlideShowFlexBox}>
-        {this.props.collection.map((room, index) => (<ul key={index} style={this.alignCenter}><ImageSlide room={room} styles={this.props.styles} /></ul>))}
+      <div className="slide-show-wrapper">
+        {collection.map(
+          (room, i) => (
+            <img key={i} src={room.url} alt="some_stuff_from_description" />
+          ),
+        )
+        }
       </div>
     );
   }
 }
+
 export default SlideShow;

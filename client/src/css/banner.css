@@ -1,4 +1,5 @@
-.slide {
+.main-slide {
+  position: absolute;
   background-size: cover;
   object-fit: cover;
   height: 70vh;

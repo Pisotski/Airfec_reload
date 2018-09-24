@@ -1,11 +1,9 @@
 import React from 'react';
 
 const ImageSlide = props => (
-      <div>
-          <div className="slide">
-            <img src={props.room.url} style={props.styles} onClick={props.clickFunction}></img>
-          </div>
-      </div>
+  <div className="rotating-hero">
+    <img src={props.room.url} onClick={props.clickFunction}></img>
+  </div>
 );
 
 export default ImageSlide;

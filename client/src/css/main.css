@@ -8,3 +8,27 @@ html {
   -moz-box-sizing: inherit;
   box-sizing: inherit;
   }
+/*========================
+=========BUTTONS==========
+========================== */
+button {
+  width: auto;
+  outline: none;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: normal;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  min-width: 51.77708763999664px;
+  background: #ffffff;
+  border-color: transparent;
+  color: #484848;
+  cursor: pointer;
+}
+.modal {
+  position: fixed;
+  min-height: 100%;
+  min-width: 100%;
+  background: rgba(48,48,48,0.9);
+  cursor: pointer,
+}

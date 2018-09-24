@@ -1,0 +1,61 @@
+.grid{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 10vh 25vh 25vh 20vh 15vh;
+  grid-gap: 3px;
+  height: 100%;
+}
+/* HEADER */
+.cross-button {
+  align-self: center;
+  justify-self: center; 
+  grid-column: 1 / -1;
+  justify-self: end;
+  margin: 1rem 2rem;
+}
+/* end of HEADER */
+/* HERO */
+.left-arrow {
+  grid-column: 2 / 1;
+  grid-row: 2 / 5;
+  align-self: center;
+}
+.hero-slide {
+  grid-column: 2 / -2;
+  grid-row: 2 / 5;
+  justify-self: center;
+  align-self: start;
+  z-index: 1;
+}
+.right-arrow {
+  grid-column: -2 / -1;
+  grid-row: 2 / 4;
+  align-self: center;
+  justify-self: end;
+}
+/* end of HERO */
+/* HERO DESCRIPTION */
+.image-description {
+  grid-column: 2 / -2;
+  grid-row:  4 / 5;
+  align-self: end;
+  color: aliceblue;
+  z-index: 2;
+}
+/* end of HERO DESCRIPTION */
+/* SLIDE SHOW */
+.slide-show {
+  grid-column: 2 / -2;
+  grid-row: 5 / 6;
+  align-self: end;
+  z-index: 2;
+}
+/* end of SLIDE SHOW */
+.hero-slide div > img {
+  max-width: 100%;
+  max-height: 70vh;
+}
+/* ====================
+=======ANIMATIONS======
+======================= */
+
