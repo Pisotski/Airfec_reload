@@ -13,7 +13,8 @@ class Carousel extends React.Component {
     this.state = {
       currentImageIndex: 0,
       currectSlideDeck: collection.slice(0, 7),
-      showSlideShow: true,
+      showSlideShow: false,
+      descriptionPosition: '5/6',
     };
 
     this.previousSlide = this.previousSlide.bind(this);
@@ -61,8 +62,14 @@ class Carousel extends React.Component {
   }
 
   render() {
-    const { currectSlideDeck, currentImageIndex, showSlideShow } = this.state;
+    const {
+      descriptionPosition, currectSlideDeck, currentImageIndex, showSlideShow,
+    } = this.state;
     const { collection, clickFunction } = this.props;
+    const position = {
+      gridRow: descriptionPosition,
+    };
+
     return (
       <div className="grid">
         <button className="cross-button" type="button" onClick={clickFunction}>
@@ -80,13 +87,22 @@ class Carousel extends React.Component {
         <div className="right-arrow">
           <Arrow direction="right" clickFunction={this.nextSlide} glyph="&#9654;" />
         </div>
-        <div className="image-description">
-          <div onClick={this.showSlideShow}>
-            {collection[currentImageIndex].description}
-            <button className="list-button" type="button" onClick={this.hideSlideShow}>
-              LIST
-            </button>
-          </div>
+        <div
+          className="image-description"
+          style={position}
+          onMouseEnter={() => {
+            this.setState({ descriptionPosition: '4/5' });
+          }
+          }
+          onFocus={() => {
+            this.setState({ descriptionPosition: '4/5' });
+          }
+          }
+        >
+          {collection[currentImageIndex].description}
+          <button className="list-button" type="button" onClick={this.hideSlideShow}>
+            LIST
+          </button>
         </div>
         {showSlideShow
           ? (

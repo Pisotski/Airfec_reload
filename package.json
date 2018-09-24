@@ -39,6 +39,7 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
+    "animate-css-grid": "^1.0.4",
     "app-root-path": "^2.1.0",
     "aws-sdk": "^2.320.0",
     "axios": "^0.18.0",
