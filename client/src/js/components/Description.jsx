@@ -10,6 +10,7 @@ function Description(
     toggleSlideShow,
   },
 ) {
+  const glyph = gridRow !== '4/5' ? 'Show Photo List \u2303' : 'Hide Photo List \u2335';
   return (
     <div style={{ gridRow }} className="image-description-wrapper">
       <div
@@ -20,7 +21,7 @@ function Description(
         {description.split(' ')[0]}
       </div>
       <button className="list-button" type="button" onClick={toggleSlideShow}>
-      LIST
+        {glyph}
       </button>
     </div>
   );

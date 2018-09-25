@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageSlide from './ImageSlide';
 import SlideShow from './SlideShow';
@@ -75,16 +75,9 @@ class Carousel extends React.Component {
 
     return (
       <div className="grid">
-        <button className="cross-button" type="button" onClick={clickFunction}>
-        &#xe079;
-        </button>
+        <FontAwesomeIcon id="cross-button" size="2x" icon={faTimes} onClick={clickFunction} />
         <FontAwesomeIcon id="left-arrow" size="2x" className="arrow" icon={faChevronLeft} onClick={this.previousSlide} />
-        <div className="hero-slide">
-          <ImageSlide
-            room={collection[currentImageIndex]}
-            clickFunction={this.nextSlide}
-          />
-        </div>
+        <ImageSlide url={collection[currentImageIndex].url} clickFunction={this.nextSlide} />
         <FontAwesomeIcon id="right-arrow" size="2x" className="arrow" icon={faChevronRight} onClick={this.nextSlide} />
         <Description
           gridRow={gridRow}
