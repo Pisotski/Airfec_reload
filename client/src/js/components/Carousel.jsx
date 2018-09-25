@@ -6,7 +6,7 @@ import ImageSlide from './ImageSlide';
 import SlideShow from './SlideShow';
 import Description from './Description';
 import '../../css/carousel.css';
-import Helper from '../../../../helpers/helperFunctions';
+import currectSlideDeckGenerator from '../../../../helpers/helperFunctions';
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Carousel extends React.Component {
     const { collection } = this.props;
     this.state = {
       currentImageIndex: 0,
-      currectSlideDeck: collection.slice(0, 6),
+      currectSlideDeck: collection.slice(0, 7),
       showSlideShow: false,
       gridRow: '5/6',
     };
@@ -31,10 +31,9 @@ class Carousel extends React.Component {
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-
     this.setState({
       currentImageIndex: index,
-      currectSlideDeck: Helper.currectSlideDeckGenerator(collection, index),
+      currectSlideDeck: currectSlideDeckGenerator(collection, index),
     });
   }
 
@@ -47,7 +46,7 @@ class Carousel extends React.Component {
 
     this.setState({
       currentImageIndex: index,
-      currectSlideDeck: Helper.currectSlideDeckGenerator(collection, index),
+      currectSlideDeck: currectSlideDeckGenerator(collection, index),
     });
   }
 
@@ -72,7 +71,6 @@ class Carousel extends React.Component {
       gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
     } = this.state;
     const { collection, clickFunction } = this.props;
-
     return (
       <div className="grid">
         <FontAwesomeIcon id="cross-button" size="2x" icon={faTimes} onClick={clickFunction} />

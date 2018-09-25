@@ -2,27 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../../css/slideshow.css';
 
-class SlideShow extends React.Component {
-  constructor(props) {
-    super(props);
-    const { collection } = this.props;
-    this.state = {
-      collection,
-    };
-  }
-
-  render() {
-    const { collection } = this.state;
-    return (
-      <div className="slide-show-wrapper">
-        {collection.map(
-          room => (<img key={room.id} src={room.url} alt="some_stuff_from_description" />),
-        )
-        }
-      </div>
-    );
-  }
+function SlideShow({ collection }) {
+  return (
+    <div className="slide-show-wrapper">
+      {collection.map(
+        room => (<img key={room.id} src={room.url} alt="some_stuff_from_description" />),
+      )
+      }
+    </div>
+  );
 }
+
 const collectionShape = PropTypes.shape({
   title: PropTypes.string,
   id: PropTypes.number,

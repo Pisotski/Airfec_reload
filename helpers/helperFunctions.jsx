@@ -1,8 +1,6 @@
-const currectSlideDeckGenerator = (collection, currentIndex) => {
-  if (currentIndex < 4) {
-    return collection.slice(0, 7);
+export default function currectSlideDeckGenerator(lib, idx) {
+  if (idx < 4) {
+    return lib.slice(0, 7);
   }
-  return currentIndex > collection.length - 4 ? collection.slice(collection.length - 7) : collection.slice(currentIndex - 3, currentIndex + 4);
-};
-
-export default { currectSlideDeckGenerator };
+  return idx > lib.length - 4 ? lib.slice(lib.length - 7) : lib.slice(idx - 3, idx + 4);
+}
