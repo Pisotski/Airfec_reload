@@ -1,17 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import '../../css/banner.css';
 
-const Banner = (props) => {
+const Banner = ({ url, clickFunction }) => {
   const styles = {
-    backgroundImage: `url(${props.room.url})`,
-    height: 325,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
+    backgroundImage: `url(${url})`,
   };
   return (
-    <div className="slide" style={styles} onClick={props.clickFunction}>
-    </div>
+    <div role="presentation" className="main-slide" style={styles} onClick={clickFunction} />
   );
+};
+
+Banner.defaultProps = {
+  url: null,
+  clickFunction: null,
+};
+Banner.propTypes = {
+  url: PropTypes.string,
+  clickFunction: PropTypes.func,
 };
 
 export default Banner;

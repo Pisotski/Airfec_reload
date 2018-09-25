@@ -1,5 +1,12 @@
 const mysql = require('mysql');
-const mysqlConfig = require('../helpers/mysqlConfig');
+require('dotenv').config({ path: `${process.env.HOME}/.dotenv/airfec_reload/.env` });
+
+const mysqlConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: '',
+  database: process.env.DB_NAME,
+};
 
 const connection = mysql.createConnection(mysqlConfig);
 connection.connect(console.log('connected to MYSQL'));

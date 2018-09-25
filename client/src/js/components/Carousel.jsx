@@ -1,100 +1,132 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageSlide from './ImageSlide';
-import Arrow from './Arrow';
 import SlideShow from './SlideShow';
-import FlexBox from '../../css/carouselStyles';
+import Description from './Description';
+import '../../css/carousel.css';
 import Helper from '../../../../helpers/helperFunctions';
 
 class Carousel extends React.Component {
   constructor(props) {
     super(props);
+    const { collection } = this.props;
     this.state = {
       currentImageIndex: 0,
-      currectSlideDeck: this.props.collection.slice(0, 7),
+      currectSlideDeck: collection.slice(0, 6),
       showSlideShow: false,
+      gridRow: '5/6',
     };
 
     this.previousSlide = this.previousSlide.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.showSlideShow = this.showSlideShow.bind(this);
-    this.hideSlideShow = this.hideSlideShow.bind(this);
+    this.toggleSlideShow = this.toggleSlideShow.bind(this);
   }
 
   previousSlide() {
-    const imgUrls = this.props.collection;
-    const lastIndex = imgUrls.length - 1;
+    const { collection } = this.props;
+    const lastIndex = collection.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
 
     this.setState({
       currentImageIndex: index,
-      currectSlideDeck: Helper.currectSlideDeckGenerator(imgUrls, index),
+      currectSlideDeck: Helper.currectSlideDeckGenerator(collection, index),
     });
   }
 
   nextSlide() {
-    const imgUrls = this.props.collection;
-    const lastIndex = imgUrls.length - 1;
+    const { collection } = this.props;
+    const lastIndex = collection.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
 
     this.setState({
       currentImageIndex: index,
-      currectSlideDeck: Helper.currectSlideDeckGenerator(imgUrls, index),
+      currectSlideDeck: Helper.currectSlideDeckGenerator(collection, index),
+    });
+  }
+
+  toggleSlideShow() {
+    const { showSlideShow } = this.state;
+    const gridRow = showSlideShow ? '5/6' : '4/5';
+    this.setState({
+      showSlideShow: !showSlideShow,
+      gridRow,
     });
   }
 
   showSlideShow() {
-    console.log('here');
     this.setState({
       showSlideShow: true,
-    });
-  }
-
-  hideSlideShow() {
-    this.setState({
-      showSlideShow: false,
+      gridRow: '4/5',
     });
   }
 
   render() {
+    const {
+      gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
+    } = this.state;
+    const { collection, clickFunction } = this.props;
+
     return (
-      <div style={FlexBox.FlexCol}>
-        <div style={FlexBox.CrossButtonStyles}>
-          <button onClick={this.props.clickFunction}>
-          &#xe079;
-          </button>
+      <div className="grid">
+        <button className="cross-button" type="button" onClick={clickFunction}>
+        &#xe079;
+        </button>
+        <FontAwesomeIcon id="left-arrow" size="2x" className="arrow" icon={faChevronLeft} onClick={this.previousSlide} />
+        <div className="hero-slide">
+          <ImageSlide
+            room={collection[currentImageIndex]}
+            clickFunction={this.nextSlide}
+          />
         </div>
-        <div style={FlexBox.FlexRow}>
-          <div style={FlexBox.LeftArrowButtonStyles}>
-            <Arrow direction="left" clickFunction={this.previousSlide} glyph="&#9664;" />
-          </div>
-          <div style={FlexBox.ImageSlidePosition}>
-              <ImageSlide styles={FlexBox.MainSlide} room={this.props.collection[this.state.currentImageIndex]} clickFunction={this.nextSlide} />
-          </div>
-          <div style={FlexBox.RightArrowButtonStyles}>
-            <Arrow direction="right" clickFunction={this.nextSlide} glyph="&#9654;" />
-          </div>
-        </div>
-        <div style={ FlexBox.DescriptionPosition }>
-            <div style={ FlexBox.DescriptionStyles } onMouseEnter={ this.showSlideShow }>
-              {this.props.collection[this.state.currentImageIndex].description}
-              <button style={ FlexBox.DescriptionButton } onClick={ this.hideSlideShow }>
-                LIST
-              </button>
+        <FontAwesomeIcon id="right-arrow" size="2x" className="arrow" icon={faChevronRight} onClick={this.nextSlide} />
+        <Description
+          gridRow={gridRow}
+          description={collection[currentImageIndex].description}
+          showSlideShow={this.showSlideShow}
+          toggleSlideShow={this.toggleSlideShow}
+        />
+        {showSlideShow
+          ? (
+            <div className="slide-show">
+              <SlideShow collection={currectSlideDeck} />
             </div>
-        </div>
-        {this.state.showSlideShow ?
-          <div style={FlexBox.SlideShowFlexBox}>
-            <SlideShow styles={FlexBox.SmallSlideStyles} collection={this.state.currectSlideDeck} />
-        </div> :
-          null
+          )
+          : null
         }
       </div>
     );
   }
 }
+
+const collectionShape = PropTypes.shape({
+  title: PropTypes.string,
+  id: PropTypes.number,
+  posted: PropTypes.string,
+  roomid: PropTypes.number,
+  url: PropTypes.string,
+  verification: PropTypes.number,
+});
+Carousel.defaultProps = {
+  collection: {
+    title: null,
+    id: 0,
+    posted: null,
+    roomid: 0,
+    url: null,
+    verification: 0,
+  },
+  clickFunction: null,
+};
+Carousel.propTypes = {
+  collection: PropTypes.arrayOf(collectionShape),
+  clickFunction: PropTypes.func,
+};
 
 export default Carousel;

@@ -1,22 +1,37 @@
 import React from 'react';
-import Carousel from './Carousel.jsx';
+import PropTypes from 'prop-types';
+import Carousel from './Carousel';
 
-const BackgroundLayout = (props) => {
-  const backgroundLayoutStyle = {
-    position: 'fixed',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    background: 'rgba(0,0,0,0.9)',
-    cursor: 'pointer',
-  };
-
+const BackgroundLayout = ({ clickFunction, collection }) => {
   return (
-    <div style={backgroundLayoutStyle}>
-      <Carousel clickFunction={props.clickFunction} collection={props.collection} />
+    <div className="modal">
+      <Carousel clickFunction={clickFunction} collection={collection} />
     </div>
   );
+};
+
+const collectionShape = PropTypes.shape({
+  title: PropTypes.string,
+  id: PropTypes.number,
+  posted: PropTypes.string,
+  roomid: PropTypes.number,
+  url: PropTypes.string,
+  verification: PropTypes.number,
+});
+BackgroundLayout.defaultProps = {
+  collection: {
+    title: null,
+    id: 0,
+    posted: null,
+    roomid: 0,
+    url: null,
+    verification: 0,
+  },
+  clickFunction: null,
+};
+BackgroundLayout.propTypes = {
+  collection: PropTypes.arrayOf(collectionShape),
+  clickFunction: PropTypes.func,
 };
 
 export default BackgroundLayout;

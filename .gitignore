@@ -6,3 +6,8 @@ node_modules/
 
 ##webpack default output folder
 public/
+
+##passwords
+helpers/configs.js
+helpers/mysqlConfigs.js
+.env

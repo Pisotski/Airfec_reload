@@ -1,0 +1,10 @@
+.main-slide {
+  position: absolute;
+  background-size: cover;
+  object-fit: cover;
+  height: 70vh;
+  min-width: 100vw;
+  animation-name: keyframe_18jn58a;
+  animation-duration: 500ms;
+  animation-timing-function: ease-out;
+}
