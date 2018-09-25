@@ -40,14 +40,17 @@ class App extends React.Component {
     const { isLoading, collection, showCarousel } = this.state;
     return (
       <div id="main-slide">
-        { isLoading
-          ? <div className="loading">{'I\'m loading'}</div>
-          : <Banner clickFunction={this.toggleCarousel} url={collection[0].url} />
-        }
-        {showCarousel
-          ? <BackgroundLayout clickFunction={this.toggleCarousel} collection={collection} />
-          : null
-        }
+        <Choose>
+          <When condition={isLoading}>
+            <div className="loading">{'I\'m loading'}</div>
+          </When>
+          <Otherwise>
+            <Banner clickFunction={this.toggleCarousel} url={collection[0].url} />
+          </Otherwise>
+        </Choose>
+        <If condition={showCarousel}>
+          <BackgroundLayout clickFunction={this.toggleCarousel} collection={collection} />
+        </If>
       </div>
     );
   }
