@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageSlide from './ImageSlide';
-import Arrow from './Arrow';
 import SlideShow from './SlideShow';
+import Description from './Description';
 import '../../css/carousel.css';
 import Helper from '../../../../helpers/helperFunctions';
 
@@ -12,15 +14,15 @@ class Carousel extends React.Component {
     const { collection } = this.props;
     this.state = {
       currentImageIndex: 0,
-      currectSlideDeck: collection.slice(0, 7),
+      currectSlideDeck: collection.slice(0, 6),
       showSlideShow: false,
-      descriptionPosition: '5/6',
+      gridRow: '5/6',
     };
 
     this.previousSlide = this.previousSlide.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.showSlideShow = this.showSlideShow.bind(this);
-    this.hideSlideShow = this.hideSlideShow.bind(this);
+    this.toggleSlideShow = this.toggleSlideShow.bind(this);
   }
 
   previousSlide() {
@@ -49,61 +51,47 @@ class Carousel extends React.Component {
     });
   }
 
-  showSlideShow() {
+  toggleSlideShow() {
+    const { showSlideShow } = this.state;
+    const gridRow = showSlideShow ? '5/6' : '4/5';
     this.setState({
-      showSlideShow: true,
+      showSlideShow: !showSlideShow,
+      gridRow,
     });
   }
 
-  hideSlideShow() {
+  showSlideShow() {
     this.setState({
-      showSlideShow: false,
+      showSlideShow: true,
+      gridRow: '4/5',
     });
   }
 
   render() {
     const {
-      descriptionPosition, currectSlideDeck, currentImageIndex, showSlideShow,
+      gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
     } = this.state;
     const { collection, clickFunction } = this.props;
-    const position = {
-      gridRow: descriptionPosition,
-    };
 
     return (
       <div className="grid">
         <button className="cross-button" type="button" onClick={clickFunction}>
         &#xe079;
         </button>
-        <div className="left-arrow">
-          <Arrow direction="left" clickFunction={this.previousSlide} glyph="&#9664;" />
-        </div>
+        <FontAwesomeIcon id="left-arrow" size="2x" className="arrow" icon={faChevronLeft} onClick={this.previousSlide} />
         <div className="hero-slide">
           <ImageSlide
             room={collection[currentImageIndex]}
             clickFunction={this.nextSlide}
           />
         </div>
-        <div className="right-arrow">
-          <Arrow direction="right" clickFunction={this.nextSlide} glyph="&#9654;" />
-        </div>
-        <div
-          className="image-description"
-          style={position}
-          onMouseEnter={() => {
-            this.setState({ descriptionPosition: '4/5' });
-          }
-          }
-          onFocus={() => {
-            this.setState({ descriptionPosition: '4/5' });
-          }
-          }
-        >
-          {collection[currentImageIndex].description}
-          <button className="list-button" type="button" onClick={this.hideSlideShow}>
-            LIST
-          </button>
-        </div>
+        <FontAwesomeIcon id="right-arrow" size="2x" className="arrow" icon={faChevronRight} onClick={this.nextSlide} />
+        <Description
+          gridRow={gridRow}
+          description={collection[currentImageIndex].description}
+          showSlideShow={this.showSlideShow}
+          toggleSlideShow={this.toggleSlideShow}
+        />
         {showSlideShow
           ? (
             <div className="slide-show">
