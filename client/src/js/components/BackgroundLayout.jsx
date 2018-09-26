@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Carousel from './Carousel';
 
-const BackgroundLayout = ({ clickFunction, collection }) => {
+function BackgroundLayout({ clickFunction, collection }) {
   return (
     <div className="modal">
       <Carousel clickFunction={clickFunction} collection={collection} />
     </div>
   );
-};
+}
 
 const collectionShape = PropTypes.shape({
   title: PropTypes.string,

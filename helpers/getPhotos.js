@@ -5,7 +5,7 @@ require('dotenv').config({ path: `${process.env.HOME}/.dotenv/airfec_reload/.env
 AWS.config.update({
   accessKeyId: process.env.AWS_AKID,
   secretAccessKey: process.env.AWS_SAK,
-  region: 'us-east-2',
+  region: 'us-east-1',
 });
 
 const urlReplacer = (arrayOfUrls) => {
@@ -20,12 +20,12 @@ const urlReplacer = (arrayOfUrls) => {
   }
 };
 const validUrlsGenerator = (urls) => {
-  urlReplacer(urls.map(img => `https://s3.us-east-2.amazonaws.com/airfec/${img.Key}`));
+  urlReplacer(urls.map(img => `https://s3.us-east-1.amazonaws.com/airfec2/${img.Key}`));
 };
 
 const updatePhotos = () => {
   const bucketParams = {
-    Bucket: 'airfec',
+    Bucket: 'airfec2',
   };
 
   const s3 = new AWS.S3();

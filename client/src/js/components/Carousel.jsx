@@ -6,7 +6,7 @@ import ImageSlide from './ImageSlide';
 import SlideShow from './SlideShow';
 import Description from './Description';
 import '../../css/carousel.css';
-import currectSlideDeckGenerator from '../../../../helpers/helperFunctions';
+import assist from '../../../../helpers/helperFunctions';
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -19,10 +19,21 @@ class Carousel extends React.Component {
       gridRow: '5/6',
     };
 
+    this.setImageHero = this.setImageHero.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
+
     this.showSlideShow = this.showSlideShow.bind(this);
     this.toggleSlideShow = this.toggleSlideShow.bind(this);
+  }
+
+  setImageHero(index, id) {
+    const { collection } = this.props;
+    const idx = id ? assist.findImageById(collection, id) : index;
+    this.setState({
+      currentImageIndex: idx,
+      currectSlideDeck: assist.currectSlideDeckGenerator(collection, idx),
+    });
   }
 
   previousSlide() {
@@ -33,7 +44,7 @@ class Carousel extends React.Component {
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
     this.setState({
       currentImageIndex: index,
-      currectSlideDeck: currectSlideDeckGenerator(collection, index),
+      currectSlideDeck: assist.currectSlideDeckGenerator(collection, index),
     });
   }
 
@@ -46,7 +57,7 @@ class Carousel extends React.Component {
 
     this.setState({
       currentImageIndex: index,
-      currectSlideDeck: currectSlideDeckGenerator(collection, index),
+      currectSlideDeck: assist.currectSlideDeckGenerator(collection, index),
     });
   }
 
@@ -71,6 +82,7 @@ class Carousel extends React.Component {
       gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
     } = this.state;
     const { collection, clickFunction } = this.props;
+    console.log(currectSlideDeck, currentImageIndex);
     return (
       <div className="grid">
         <FontAwesomeIcon id="cross-button" size="2x" icon={faTimes} onClick={clickFunction} />
@@ -83,14 +95,9 @@ class Carousel extends React.Component {
           showSlideShow={this.showSlideShow}
           toggleSlideShow={this.toggleSlideShow}
         />
-        {showSlideShow
-          ? (
-            <div className="slide-show">
-              <SlideShow collection={currectSlideDeck} />
-            </div>
-          )
-          : null
-        }
+        <If condition={showSlideShow}>
+          <SlideShow collection={currectSlideDeck} setImageHero={this.setImageHero} />
+        </If>
       </div>
     );
   }
