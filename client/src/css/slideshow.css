@@ -15,4 +15,5 @@
   max-width: 100px;
   max-height: 67px;
   margin-right: 7px;
+  filter: brightness(50%);
 }

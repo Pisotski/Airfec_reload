@@ -57,6 +57,7 @@
   box-sizing: border-box;
   max-width: 100%;
   max-height: 70vh;
+  opacity: 0.8;
 }
 .arrow {
   align-self: center;

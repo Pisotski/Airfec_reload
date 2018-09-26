@@ -14,6 +14,7 @@ class Carousel extends React.Component {
     const { collection } = this.props;
     this.state = {
       currentImageIndex: 0,
+      heroId: collection[0].id,
       currectSlideDeck: collection.slice(0, 7),
       showSlideShow: false,
       gridRow: '5/6',
@@ -29,10 +30,13 @@ class Carousel extends React.Component {
 
   setImageHero(index, id) {
     const { collection } = this.props;
-    const idx = id ? assist.findImageById(collection, id) : index;
+    const currentImageIndex = id ? assist.findImageById(collection, id) : index;
+    const currectSlideDeck = assist.currectSlideDeckGenerator(collection, currentImageIndex);
+    const heroId = collection[index].id;
     this.setState({
-      currentImageIndex: idx,
-      currectSlideDeck: assist.currectSlideDeckGenerator(collection, idx),
+      currentImageIndex,
+      currectSlideDeck,
+      heroId,
     });
   }
 
@@ -42,10 +46,7 @@ class Carousel extends React.Component {
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-    this.setState({
-      currentImageIndex: index,
-      currectSlideDeck: assist.currectSlideDeckGenerator(collection, index),
-    });
+    this.setImageHero(index);
   }
 
   nextSlide() {
@@ -54,11 +55,7 @@ class Carousel extends React.Component {
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-
-    this.setState({
-      currentImageIndex: index,
-      currectSlideDeck: assist.currectSlideDeckGenerator(collection, index),
-    });
+    this.setImageHero(index);
   }
 
   toggleSlideShow() {
@@ -79,10 +76,9 @@ class Carousel extends React.Component {
 
   render() {
     const {
-      gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
+      heroId, gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
     } = this.state;
     const { collection, clickFunction } = this.props;
-    console.log(currectSlideDeck, currentImageIndex);
     return (
       <div className="grid">
         <FontAwesomeIcon id="cross-button" size="2x" icon={faTimes} onClick={clickFunction} />
@@ -96,7 +92,7 @@ class Carousel extends React.Component {
           toggleSlideShow={this.toggleSlideShow}
         />
         <If condition={showSlideShow}>
-          <SlideShow collection={currectSlideDeck} setImageHero={this.setImageHero} />
+          <SlideShow collection={currectSlideDeck} heroId={heroId} setImageHero={this.setImageHero} />
         </If>
       </div>
     );

@@ -11,7 +11,7 @@ function findImageById(lib, id) {
       return i;
     }
   }
-  return 'couldn\'t find the image';
+  return -1;
 }
 
 export default { currectSlideDeckGenerator, findImageById };
