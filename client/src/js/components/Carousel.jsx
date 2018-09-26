@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageSlide from './ImageSlide';
 import SlideShow from './SlideShow';
 import Description from './Description';
 import '../../css/carousel.css';
-import Helper from '../../../../helpers/helperFunctions';
+import assist from '../../../../helpers/helperFunctions';
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -14,15 +14,30 @@ class Carousel extends React.Component {
     const { collection } = this.props;
     this.state = {
       currentImageIndex: 0,
-      currectSlideDeck: collection.slice(0, 6),
+      heroId: collection[0].id,
+      currectSlideDeck: collection.slice(0, 7),
       showSlideShow: false,
       gridRow: '5/6',
     };
 
+    this.setImageHero = this.setImageHero.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
+
     this.showSlideShow = this.showSlideShow.bind(this);
     this.toggleSlideShow = this.toggleSlideShow.bind(this);
+  }
+
+  setImageHero(index, id) {
+    const { collection } = this.props;
+    const currentImageIndex = id ? assist.findImageById(collection, id) : index;
+    const currectSlideDeck = assist.currectSlideDeckGenerator(collection, currentImageIndex);
+    const heroId = index ? collection[index].id : collection[currentImageIndex].id;
+    this.setState({
+      currentImageIndex,
+      currectSlideDeck,
+      heroId,
+    });
   }
 
   previousSlide() {
@@ -31,11 +46,7 @@ class Carousel extends React.Component {
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-
-    this.setState({
-      currentImageIndex: index,
-      currectSlideDeck: Helper.currectSlideDeckGenerator(collection, index),
-    });
+    this.setImageHero(index);
   }
 
   nextSlide() {
@@ -44,11 +55,7 @@ class Carousel extends React.Component {
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-
-    this.setState({
-      currentImageIndex: index,
-      currectSlideDeck: Helper.currectSlideDeckGenerator(collection, index),
-    });
+    this.setImageHero(index);
   }
 
   toggleSlideShow() {
@@ -69,22 +76,14 @@ class Carousel extends React.Component {
 
   render() {
     const {
-      gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
+      heroId, gridRow, currectSlideDeck, currentImageIndex, showSlideShow,
     } = this.state;
     const { collection, clickFunction } = this.props;
-
     return (
       <div className="grid">
-        <button className="cross-button" type="button" onClick={clickFunction}>
-        &#xe079;
-        </button>
+        <FontAwesomeIcon id="cross-button" size="2x" icon={faTimes} onClick={clickFunction} />
         <FontAwesomeIcon id="left-arrow" size="2x" className="arrow" icon={faChevronLeft} onClick={this.previousSlide} />
-        <div className="hero-slide">
-          <ImageSlide
-            room={collection[currentImageIndex]}
-            clickFunction={this.nextSlide}
-          />
-        </div>
+        <ImageSlide url={collection[currentImageIndex].url} clickFunction={this.nextSlide} />
         <FontAwesomeIcon id="right-arrow" size="2x" className="arrow" icon={faChevronRight} onClick={this.nextSlide} />
         <Description
           gridRow={gridRow}
@@ -92,14 +91,13 @@ class Carousel extends React.Component {
           showSlideShow={this.showSlideShow}
           toggleSlideShow={this.toggleSlideShow}
         />
-        {showSlideShow
-          ? (
-            <div className="slide-show">
-              <SlideShow collection={currectSlideDeck} />
-            </div>
-          )
-          : null
-        }
+        <If condition={showSlideShow}>
+          <SlideShow
+            collection={currectSlideDeck}
+            heroId={heroId}
+            setImageHero={this.setImageHero}
+          />
+        </If>
       </div>
     );
   }

@@ -1,8 +1,17 @@
-const currectSlideDeckGenerator = (collection, currentIndex) => {
-  if (currentIndex < 4) {
-    return collection.slice(0, 7);
+function currectSlideDeckGenerator(lib, idx) {
+  if (idx < 4) {
+    return lib.slice(0, 7);
   }
-  return currentIndex > collection.length - 4 ? collection.slice(collection.length - 7) : collection.slice(currentIndex - 3, currentIndex + 4);
-};
+  return idx > lib.length - 4 ? lib.slice(lib.length - 7) : lib.slice(idx - 3, idx + 4);
+}
 
-export default { currectSlideDeckGenerator };
+function findImageById(lib, id) {
+  for (let i = 0; i < lib.length; i += 1) {
+    if (lib[i].id === id) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+export default { currectSlideDeckGenerator, findImageById };

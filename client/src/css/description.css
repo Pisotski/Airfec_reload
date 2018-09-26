@@ -1,6 +1,11 @@
 .image-description-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   min-width: 100%;
+}
+.image-description-wrapper > button {
+  background: none;
+  border: none;
+  color: aliceblue;
 }

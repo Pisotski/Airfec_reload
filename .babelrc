@@ -3,6 +3,7 @@
       "env", "react"
   ],
   "plugins": [
+    "jsx-control-statements",
     "transform-object-rest-spread",
     [
       "transform-runtime",

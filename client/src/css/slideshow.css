@@ -6,8 +6,18 @@
   display: flex;
   justify-content: space-between;
   max-height: 100px;
+  justify-content: center;
+}
+.slide-show-wrapper:last-child{
+  margin-right: 0;
 }
 .slide-show-wrapper > img {
   max-width: 100px;
   max-height: 67px;
+  margin-right: 7px;
+  filter: brightness(50%);
+}
+
+.slide-show-wrapper > img:hover {
+  filter: brightness(100%);
 }

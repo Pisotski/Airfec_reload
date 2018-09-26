@@ -1,9 +1,9 @@
 const express = require('express');
-// const axios = require('axios');
 const morgan = require('morgan');
 const path = require('path');
 const db = require('./connection.js');
 // const helper = require('../helpers/getPhotos.js');
+
 const app = express();
 
 // use morgan to log incoming requests
@@ -59,6 +59,9 @@ app.use((error, req, res, next) => {
 
 // determine listening port
 const port = process.env.PORT || 3003;
+
+// to update the database with pictures from s3
+// helper.updatePhotos();
 
 module.exports = app;
 
