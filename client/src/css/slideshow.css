@@ -17,3 +17,7 @@
   margin-right: 7px;
   filter: brightness(50%);
 }
+
+.slide-show-wrapper > img:hover {
+  filter: brightness(100%);
+}

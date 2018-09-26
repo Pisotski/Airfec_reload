@@ -32,7 +32,7 @@ class Carousel extends React.Component {
     const { collection } = this.props;
     const currentImageIndex = id ? assist.findImageById(collection, id) : index;
     const currectSlideDeck = assist.currectSlideDeckGenerator(collection, currentImageIndex);
-    const heroId = collection[index].id;
+    const heroId = index ? collection[index].id : collection[currentImageIndex].id;
     this.setState({
       currentImageIndex,
       currectSlideDeck,
@@ -92,7 +92,11 @@ class Carousel extends React.Component {
           toggleSlideShow={this.toggleSlideShow}
         />
         <If condition={showSlideShow}>
-          <SlideShow collection={currectSlideDeck} heroId={heroId} setImageHero={this.setImageHero} />
+          <SlideShow
+            collection={currectSlideDeck}
+            heroId={heroId}
+            setImageHero={this.setImageHero}
+          />
         </If>
       </div>
     );

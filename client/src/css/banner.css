@@ -1,6 +1,33 @@
-.main-slide {
-  position: absolute;
-  min-height: 80%;
-  min-width: 100%;
+#banner {
   background-size: cover;
+  min-width: 100vw;
+  height: 100vh;
+}
+#heart-and-share {
+  position: absolute;
+  top: 5vh;
+  right: 5vw;
+}
+#share-button{
+  margin-right: 5px;
+}
+#view-photos-button{
+  position: absolute;
+  bottom: 5vh;
+  left: 5vw;
+}
+.front-buttons{
+  background-color: aliceblue;
+  padding: 8px 16px;
+  border: 1px solid black;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+.front-buttons > span {
+  display: inline-block;
+}
+
+.front-buttons span svg {
+  margin-right: 5px;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Banner from './Banner';
-import BackgroundLayout from './BackgroundLayout';
+import Carousel from './Carousel';
 
 class App extends React.Component {
   constructor(props) {
@@ -39,17 +39,19 @@ class App extends React.Component {
   render() {
     const { isLoading, collection, showCarousel } = this.state;
     return (
-      <div id="main-slide">
+      <div id="main-container">
         <Choose>
           <When condition={isLoading}>
             <div className="loading">{'I\'m loading'}</div>
           </When>
           <Otherwise>
-            <Banner clickFunction={this.toggleCarousel} url={collection[0].url} />
+            <Banner toggleCarousel={this.toggleCarousel} url={collection[0].url} />
           </Otherwise>
         </Choose>
         <If condition={showCarousel}>
-          <BackgroundLayout clickFunction={this.toggleCarousel} collection={collection} />
+          <div className="modal">
+            <Carousel clickFunction={this.toggleCarousel} collection={collection} />
+          </div>
         </If>
       </div>
     );
